@@ -26,7 +26,14 @@ public class Rectangle {
 	 * @return the area
 	 */
 	public Double getArea() {
-		return Math.abs((p2.x - p1.x) * (p2.y - p1.y));
+		
+		double height = 0.0;
+		double length = 0.0;
+		
+		height = getHeight();
+		length = getLength();
+		
+		return height * length;
 	}
 	
 	/**
@@ -35,6 +42,30 @@ public class Rectangle {
 	 * @return the diagonal
 	 */
 	public Double getDiagonal() {
-		return Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
+		
+		double height = 0.0;
+		double length = 0.0;
+		
+		height = getHeight();
+		length = getLength();
+		
+		/*
+		 * Pythagorean Theorem
+		 * a^2 + b^2 = c^2
+		 * c = sqrt(a^2 + b^2)
+		 */
+		return Math.sqrt(Math.pow(height, 2) + Math.pow(length, 2));
+	}
+	
+	public Double getHeight(){
+		
+		return ( Math.abs(p2.y - p1.y));
+		
+	}
+	
+	public Double getLength(){
+		
+		return ( Math.abs(p2.x - p1.x));
+		
 	}
 }
