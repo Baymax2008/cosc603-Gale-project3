@@ -74,6 +74,20 @@ public class VendingMachineTest {
 	}
 	
 	@Test
+	public final void testRemoveItemGoodReturn() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.addItem(butterfingers, "B");
+		building6008VendingMachine.addItem(milkyWay, "C");
+		building6008VendingMachine.addItem(fifthAvenue, "D");
+		
+		VendingMachineItem temp = building6008VendingMachine.removeItem("B");
+		
+		assertEquals(butterfingers, temp);
+
+		
+	}
+	
+	@Test
 	public final void testRemoveItemAddAnother() {
 		building6008VendingMachine.addItem(reeseCup, "A");
 		building6008VendingMachine.addItem(butterfingers, "B");
@@ -98,23 +112,84 @@ public class VendingMachineTest {
 	}
 
 	@Test
-	public final void testInsertMoney() {
-		fail("Not yet implemented"); // TODO
+	public final void testInsertMoneyPosAmount() {
+		building6008VendingMachine.insertMoney(1.00);
+		assertEquals(1.00, building6008VendingMachine.getBalance(), 0.0001);
 	}
+	
+	@Test
+	public final void testInsertMoneyPosAmountTwice() {
+		building6008VendingMachine.insertMoney(1.00);
+		building6008VendingMachine.insertMoney(0.50);
+		assertEquals(1.50, building6008VendingMachine.getBalance(), 0.0001);
+	}
+	
+	@Test(expected = VendingMachineException.class)
+	public final void testInsertMoneyNegAmount() {
+		building6008VendingMachine.insertMoney(-1.00);
+	}
+	
 
 	@Test
 	public final void testGetBalance() {
-		fail("Not yet implemented"); // TODO
+		building6008VendingMachine.insertMoney(1.00);
+		assertEquals(1.00, building6008VendingMachine.getBalance(), 0.0001);
 	}
 
 	@Test
-	public final void testMakePurchase() {
-		fail("Not yet implemented"); // TODO
+	public final void testMakePurchaseGoodReturn() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(.750);
+		boolean temp = building6008VendingMachine.makePurchase("A");
+		
+		assertEquals(true, temp);
+	}
+	
+	@Test
+	public final void testMakePurchaseGoodBalance() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(.750);
+		building6008VendingMachine.makePurchase("A");
+		
+		assertEquals(0.00, building6008VendingMachine.getBalance(), 0.0001);
+	}
+	
+	@Test
+	public final void testMakePurchaseBadBalance() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(0.50);
+		boolean temp = building6008VendingMachine.makePurchase("A");
+		
+		assertEquals(false, temp);
+	}
+	
+	@Test
+	public final void testMakePurchaseBadSelection() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(0.750);
+		boolean temp = building6008VendingMachine.makePurchase("B");
+		
+		assertEquals(false, temp);
 	}
 
 	@Test
-	public final void testReturnChange() {
-		fail("Not yet implemented"); // TODO
+	public final void testReturnChangeRightAmount() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(1.750);
+		building6008VendingMachine.makePurchase("A");
+		double temp = building6008VendingMachine.returnChange();
+		
+		assertEquals(1.00, temp, .0001);
+	}
+	
+	@Test
+	public final void testReturnChangeBalanceSet() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(1.750);
+		building6008VendingMachine.makePurchase("A");
+		building6008VendingMachine.returnChange();
+		
+		assertEquals(0.00, building6008VendingMachine.getBalance(), 0.0001);
 	}
 
 }
