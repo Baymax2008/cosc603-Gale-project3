@@ -28,6 +28,7 @@ public class VendingMachineTest {
 		butterfingers = null;
 		milkyWay = null;
 		fifthAvenue = null;
+		payDay = null;
 	}
 
 	@Test

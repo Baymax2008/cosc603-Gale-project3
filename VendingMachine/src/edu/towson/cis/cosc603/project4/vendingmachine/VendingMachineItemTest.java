@@ -27,16 +27,31 @@ public class VendingMachineItemTest {
 		
 	}
 
-	@Test(expected = VendingMachineException.class)
+	@Test
 	public final void testVendingMachineItemNegPrice() {
-		VendingMachineItem butterFingers = new VendingMachineItem( "Butter Fingers", -1.00);
+		
+		try {
+			VendingMachineItem butterFingers = new VendingMachineItem( "Butter Fingers", -1.00);
+	        fail(); // if we got here, no exception was thrown, which is bad
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Price cannot be less than zero";
+	        assertEquals( expected, e.getMessage());
+	    }        
 	}
 
 	@Test
-	public final void testVendingMachineItemNormal() {
+	public final void testVendingMachineItemNormalName() {
 		String butterFingerName = "Butter Fingers";
 		VendingMachineItem butterFingers = new VendingMachineItem( butterFingerName, 1.00);
 		assertEquals(butterFingerName, butterFingers.getName());
+	}
+	
+	@Test
+	public final void testVendingMachineItemNormalPrice() {
+		String butterFingerName = "Butter Fingers";
+		VendingMachineItem butterFingers = new VendingMachineItem( butterFingerName, 1.00);
+		assertEquals(1.00, butterFingers.getPrice(),0.0001);
 	}
 	
 	@Test
