@@ -8,6 +8,7 @@ public class Rectangle {
 	
 	/** The p2. */
 	private Point p1, p2;
+	private Double height, length;
 	
 	/**
 	 * Instantiates a new rectangle.
@@ -18,6 +19,9 @@ public class Rectangle {
 	Rectangle(Point p1, Point p2) {
 		this.p1 = p1;
 		this.p2 = p2;
+		
+		height = calculateHeight();
+		length = calculateLength();
 	}
 	
 	/**
@@ -27,13 +31,7 @@ public class Rectangle {
 	 */
 	public Double getArea() {
 		
-		double height = 0.0;
-		double length = 0.0;
-		
-		height = getHeight();
-		length = getLength();
-		
-		return height * length;
+		return ( height * length );
 	}
 	
 	/**
@@ -43,27 +41,34 @@ public class Rectangle {
 	 */
 	public Double getDiagonal() {
 		
-		double height = 0.0;
-		double length = 0.0;
-		
-		height = getHeight();
-		length = getLength();
-		
 		/*
 		 * Pythagorean Theorem
 		 * a^2 + b^2 = c^2
 		 * c = sqrt(a^2 + b^2)
+		 * a is the height
+		 * b is the length
+		 * 
 		 */
-		return Math.sqrt(Math.pow(height, 2) + Math.pow(length, 2));
+		return (Math.sqrt(Math.pow(height, 2) + Math.pow(length, 2)));
 	}
 	
-	public Double getHeight(){
+	/**
+	 * Gets the Height
+	 * 
+	 * @return
+	 */
+	public Double calculateHeight(){
 		
 		return ( Math.abs(p2.y - p1.y));
 		
 	}
 	
-	public Double getLength(){
+	/**
+	 * Gets the Length
+	 * 
+	 * @return
+	 */
+	public Double calculateLength(){
 		
 		return ( Math.abs(p2.x - p1.x));
 		
