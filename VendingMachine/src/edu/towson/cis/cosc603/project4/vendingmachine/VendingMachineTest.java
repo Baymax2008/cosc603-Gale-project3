@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+
 public class VendingMachineTest {
 
 	VendingMachine building6008VendingMachine;
@@ -30,25 +31,37 @@ public class VendingMachineTest {
 		fifthAvenue = null;
 		payDay = null;
 	}
-
+	
+	/**
+	 * This is testing that a good item is place is a valid slot of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testAddItemGoodPosition() {
 		building6008VendingMachine.addItem(reeseCup, "A");
 		assertEquals(reeseCup, building6008VendingMachine.getItem("A"));
 	}
-	
+
+	/**
+	 * testing you cannot put an item in a slot that doesn't exist of the {@link VendingMachine} class.
+	 */
 	@Test(expected = VendingMachineException.class)
 	public final void testAddItemBadPostion() {
 		building6008VendingMachine.addItem(reeseCup, "E");
 		
 	}
 
+	/**
+	 * testing you cannot fill a slot that is already filled of the {@link VendingMachine} class.
+	 */
 	@Test(expected = VendingMachineException.class)
 	public final void testAddItemDuplicatedPostion() {
 		building6008VendingMachine.addItem(reeseCup, "A");
 		building6008VendingMachine.addItem(butterfingers, "A");
 	}
-	
+
+	/**
+	 * testing that you can fill the machine with no errors of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testAddItemFull() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -61,7 +74,10 @@ public class VendingMachineTest {
 		assertEquals(milkyWay, building6008VendingMachine.getItem("C"));
 		assertEquals(fifthAvenue, building6008VendingMachine.getItem("D"));
 	}
-	
+
+	/**
+	 * testing that an item was removed of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testRemoveItemGood() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -73,7 +89,10 @@ public class VendingMachineTest {
 		assertEquals(null, building6008VendingMachine.getItem("B"));
 		
 	}
-	
+
+	/**
+	 * Testing the return part of Removeitem, is working correctly of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testRemoveItemGoodReturn() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -87,7 +106,10 @@ public class VendingMachineTest {
 
 		
 	}
-	
+
+	/**
+	 * Testing filling slots, removing an item, and replacing item with another kind of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testRemoveItemAddAnother() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -101,42 +123,62 @@ public class VendingMachineTest {
 		assertEquals(payDay, building6008VendingMachine.getItem("B"));
 		
 	}
-	
+
+	/**
+	 * Testing the removal of an empty item of the {@link VendingMachine} class.
+	 */
 	@Test(expected = VendingMachineException.class)
 	public final void testRemoveItemEnempty() {
 		building6008VendingMachine.removeItem("B");
 	}
-	
+
+	/**
+	 * Testing the removal of an invalid item of the {@link VendingMachine} class.
+	 */
 	@Test(expected = VendingMachineException.class)
 	public final void testRemoveItemInvalid() {
 		building6008VendingMachine.removeItem("E");
 	}
 
+	/**
+	 * This test makes sure you an insert money of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testInsertMoneyPosAmount() {
 		building6008VendingMachine.insertMoney(1.00);
 		assertEquals(1.00, building6008VendingMachine.getBalance(), 0.0001);
 	}
-	
+
+	/**
+	 * This test makes sure if you insert money twice, the balance adds correctly of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testInsertMoneyPosAmountTwice() {
 		building6008VendingMachine.insertMoney(1.00);
 		building6008VendingMachine.insertMoney(0.50);
 		assertEquals(1.50, building6008VendingMachine.getBalance(), 0.0001);
 	}
-	
+
+	/**
+	 * this test verify that the exception of adding negative numbers is working of the {@link VendingMachine} class.
+	 */
 	@Test(expected = VendingMachineException.class)
 	public final void testInsertMoneyNegAmount() {
 		building6008VendingMachine.insertMoney(-1.00);
 	}
-	
 
+	/**
+	 * This test makes sure that get Balance returns the correct amount of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testGetBalance() {
 		building6008VendingMachine.insertMoney(1.00);
 		assertEquals(1.00, building6008VendingMachine.getBalance(), 0.0001);
 	}
 
+	/**
+	 * This test states that a valid purchase has happened of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testMakePurchaseGoodReturn() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -145,7 +187,10 @@ public class VendingMachineTest {
 		
 		assertEquals(true, temp);
 	}
-	
+
+	/**
+	 * This test verify that there is enough money to buy the item of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testMakePurchaseGoodBalance() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -154,7 +199,22 @@ public class VendingMachineTest {
 		
 		assertEquals(0.00, building6008VendingMachine.getBalance(), 0.0001);
 	}
-	
+
+	/**
+	 * This test verify that the purchased item has been remove of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testMakePurchaseGoodItemRemoved() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(.750);
+		building6008VendingMachine.makePurchase("A");
+		
+		assertEquals(null, building6008VendingMachine.getItem("A"));
+	}
+
+	/**
+	 * This this verify there is enough money in the machine of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testMakePurchaseBadBalance() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -163,7 +223,10 @@ public class VendingMachineTest {
 		
 		assertEquals(false, temp);
 	}
-	
+
+	/**
+	 * This test is making sure you cannot buy from an empty slot of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testMakePurchaseBadSelection() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -173,6 +236,23 @@ public class VendingMachineTest {
 		assertEquals(false, temp);
 	}
 
+	/**
+	 * This is verifying, you cannot purchase from the same slot twice in a row of the {@link VendingMachine} class.
+	 * This is true because each slot only has one item
+	 */
+	@Test
+	public final void testMakePurchaseOfSameItem() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(.750);
+		boolean temp = building6008VendingMachine.makePurchase("A");
+		
+		temp = building6008VendingMachine.makePurchase("A");
+		assertEquals(false, temp);
+	}
+
+	/**
+	 * This is making sure that the change is the right amount of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testReturnChangeRightAmount() {
 		building6008VendingMachine.addItem(reeseCup, "A");
@@ -182,7 +262,10 @@ public class VendingMachineTest {
 		
 		assertEquals(1.00, temp, .0001);
 	}
-	
+
+	/**
+	 * This is making sure that the Return change set the Balance back to 0.00 of the {@link VendingMachine} class.
+	 */
 	@Test
 	public final void testReturnChangeBalanceSet() {
 		building6008VendingMachine.addItem(reeseCup, "A");
