@@ -20,8 +20,8 @@ public class Rectangle {
 		this.p1 = p1;
 		this.p2 = p2;
 		
-		height = calculateHeight();
-		length = calculateLength();
+		calculateHeight();
+		calculateLength();
 	}
 	
 	/**
@@ -57,9 +57,9 @@ public class Rectangle {
 	 * 
 	 * @return
 	 */
-	public Double calculateHeight(){
+	public void calculateHeight(){
 		
-		return ( Math.abs(p2.y - p1.y));
+		height = Math.abs(p2.y - p1.y);
 		
 	}
 	
@@ -68,9 +68,9 @@ public class Rectangle {
 	 * 
 	 * @return
 	 */
-	public Double calculateLength(){
+	public void calculateLength(){
 		
-		return ( Math.abs(p2.x - p1.x));
+		length = Math.abs(p2.x - p1.x);
 		
 	}
 }
