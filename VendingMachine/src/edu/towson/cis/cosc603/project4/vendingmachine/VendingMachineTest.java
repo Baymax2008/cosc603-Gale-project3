@@ -44,19 +44,34 @@ public class VendingMachineTest {
 	/**
 	 * testing you cannot put an item in a slot that doesn't exist of the {@link VendingMachine} class.
 	 */
-	@Test(expected = VendingMachineException.class)
+	@Test
 	public final void testAddItemBadPostion() {
-		building6008VendingMachine.addItem(reeseCup, "E");
 		
+		try {
+			building6008VendingMachine.addItem(reeseCup, "E");
+	        fail(); // if we got here, no exception was thrown, which is bad
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Invalid code for vending machine item";
+	        assertEquals( expected, e.getMessage());
+	    }		
 	}
 
 	/**
 	 * testing you cannot fill a slot that is already filled of the {@link VendingMachine} class.
 	 */
-	@Test(expected = VendingMachineException.class)
+	@Test
 	public final void testAddItemDuplicatedPostion() {
 		building6008VendingMachine.addItem(reeseCup, "A");
-		building6008VendingMachine.addItem(butterfingers, "A");
+		
+		try {
+			building6008VendingMachine.addItem(reeseCup, "A");
+	        fail(); // if we got here, no exception was thrown, which is bad
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Slot A already occupied";
+	        assertEquals( expected, e.getMessage());
+	    }		
 	}
 
 	/**
@@ -127,17 +142,32 @@ public class VendingMachineTest {
 	/**
 	 * Testing the removal of an empty item of the {@link VendingMachine} class.
 	 */
-	@Test(expected = VendingMachineException.class)
+	@Test
 	public final void testRemoveItemEnempty() {
-		building6008VendingMachine.removeItem("B");
+		try {
+			building6008VendingMachine.removeItem("B");
+	        fail(); // if we got here, no exception was thrown, which is bad
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Slot B is empty -- cannot remove item";
+	        assertEquals( expected, e.getMessage());
+	    }
 	}
 
 	/**
 	 * Testing the removal of an invalid item of the {@link VendingMachine} class.
 	 */
-	@Test(expected = VendingMachineException.class)
+	@Test
 	public final void testRemoveItemInvalid() {
-		building6008VendingMachine.removeItem("E");
+		
+		try {
+			building6008VendingMachine.removeItem("E");
+	        fail(); // if we got here, no exception was thrown, which is bad
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Invalid code for vending machine item";
+	        assertEquals( expected, e.getMessage());
+	    }
 	}
 
 	/**
@@ -162,9 +192,17 @@ public class VendingMachineTest {
 	/**
 	 * this test verify that the exception of adding negative numbers is working of the {@link VendingMachine} class.
 	 */
-	@Test(expected = VendingMachineException.class)
+	@Test
 	public final void testInsertMoneyNegAmount() {
-		building6008VendingMachine.insertMoney(-1.00);
+		
+		try {
+			building6008VendingMachine.insertMoney(-1.00);
+	        fail(); // if we got here, no exception was thrown, which is bad
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Invalid amount.  Amount must be >= 0";
+	        assertEquals( expected, e.getMessage());
+	    }
 	}
 
 	/**
@@ -213,7 +251,7 @@ public class VendingMachineTest {
 	}
 
 	/**
-	 * This this verify there is enough money in the machine of the {@link VendingMachine} class.
+	 * This test is when there is not enough money in the machine of the {@link VendingMachine} class.
 	 */
 	@Test
 	public final void testMakePurchaseBadBalance() {
@@ -235,7 +273,24 @@ public class VendingMachineTest {
 		
 		assertEquals(false, temp);
 	}
-
+	
+	/**
+	 * This test is making sure you cannot buy from an invalid slot of the {@link VendingMachine} class.
+	 */
+	@Test
+	public final void testMakePurchaseInvalidSelection() {
+		building6008VendingMachine.addItem(reeseCup, "A");
+		building6008VendingMachine.insertMoney(0.750);
+		
+		try {
+			building6008VendingMachine.makePurchase("E");
+	        fail(); // if we got here, no exception was thrown, which is bad
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Invalid code for vending machine item";
+	        assertEquals( expected, e.getMessage());
+	    }
+	}
 	/**
 	 * This is verifying, you cannot purchase from the same slot twice in a row of the {@link VendingMachine} class.
 	 * This is true because each slot only has one item
